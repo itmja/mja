@@ -72,6 +72,17 @@
             </thead>
             <tbody>
             <?php 
+            $unit = $this->db->query("SELECT * FROM xin_employees WHERE user_id='$session[user_id]'")->result();
+            foreach ($unit as $p) {
+              if ($cid === null) {
+                if ($p->company_id === "1") {
+                  $cid = "";
+                }else{
+                  $cid = $p->company_id;
+                }
+               
+              }
+
             $no =1;
             $bpjs = $this->db->query("SELECT * FROM xin_hrsale_module_attributes_values WHERE module_attributes_id = '6'")->result(); 
             foreach ($bpjs as $b) {
@@ -137,7 +148,7 @@
                 }
             }
             
-            
+          }
             
             ?>
            
