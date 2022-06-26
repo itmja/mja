@@ -121,8 +121,8 @@
               <h6 class="mb-0">Nama Lengkap</h6>
             </div>
             <div class="col-sm-9 text-secondary">
-                <span class="form-control" id="nama"></span>
-                <!-- <input class="form-control" placeholder="" name="nama" type="text" value="" id="nama"> -->
+                <!-- <span class="form-control" id="nama"></span> -->
+                <input class="form-control" placeholder="" name="nama" readonly type="text" value="" id="nama">
             </div>
           </div>
           <hr>
@@ -247,7 +247,7 @@
         $(document).on('click', '#cek', function() {
             let uid = $(this).data('uid');
             let nama = $(this).data('nama');
-            $('#nama').text(nama);
+            $('#nama').val(nama);
             $('#uid_pkwt').val(uid);
         });
         $(document).on('click', '#panggil', function() {
