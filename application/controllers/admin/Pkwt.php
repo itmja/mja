@@ -2142,11 +2142,39 @@ class Pkwt extends MY_Controller {
 		$uid = $this->input->post('uid');
 		$tgl_m = $this->input->post('tgl_m');
 		$tgl_b = $this->input->post('tgl_b');
-
-		$emp = $this->db->query("SELECT * FROM xin_employees WHERE uid='$uid'")->result();
-		foreach ($emp as $a) {
-			echo $a->first_name;
+		
+		$tempat = "";
+		$nik = "";
+		$ls = $this->db2->query("SELECT * FROM biodata_lo WHERE uid='$uid'")->result();
+		foreach($ls as $p){
+			$tempat = $p->tempat_l;
+			$nik = $p->no_ktp;
 		}
+		// echo $tempat;
+		$emp = $this->db->query("SELECT *,xin_designations.designation_name,xin_companies.name,xin_companies.address_1 FROM xin_employees INNER JOIN xin_designations ON xin_designations.designation_id = xin_employees.designation_id INNER JOIN xin_companies ON xin_companies.company_id = xin_employees.company_id WHERE uid='$uid'")->result();
+		foreach ($emp as $a) {
+			$nama = $a->first_name.' '.$a->last_name;
+			$document = file_get_contents("skin/PKWT.rtf");
+			// isi dokumen dinyatakan dalam bentuk string
+			$document = str_replace("#NAMA", $nama, $document);
+			$document = str_replace("#JK", $a->gender, $document);
+			$document = str_replace("#TEMPAT", $tempat, $document);
+			$document = str_replace("#TANGGALLAHIR", $a->date_of_birth, $document);
+			$document = str_replace("#NIK", $nik, $document);
+			$document = str_replace("#JABATAN", $a->designation_name, $document);
+			$document = str_replace("#ALAMAT", $a->address, $document);
+			$document = str_replace("#UNIT", $a->name, $document);
+			$document = str_replace("#ALMUNIT", $a->address_1, $document);
+			$document = str_replace("#TGL", $tgl_m, $document);
+			$document = str_replace("#MULAI", $tgl_m, $document);
+			$document = str_replace("#AKHIR", $tgl_b, $document);
+			// header untuk membuka file output RTF dengan MS. Word
+			header("Content-type: application/msword");
+			header("Content-disposition: inline; filename=$nama.doc");
+			header("Content-length: ".strlen($document));
+			
+		}
+		echo $document;
 	 }
 	 public function surat_tugas(){
         $uid = $this->input->post('uid');
