@@ -143,7 +143,22 @@ $all_job_categories = $this->Recruitment_model->all_job_categories();
                  
             ?>
                 <tr>
-                    <td><span data-toggle="tooltip" data-placement="top" title="Status"><a id='cek' data-id="<?= $u->id ?>" data-toggle="modal" data-target="#notif"><button type="button" class="btn btn-outline-secondary btn-sm m-b-0-0 waves-effect waves-light"><i class="oi oi-pencil"></i></button></a></span> <span data-toggle="tooltip" data-placement="top" title="Lihat"><a href="<?php echo site_url('admin/job_post/read_application/'.$u->id);?>"><button type="button" class="btn btn-outline-secondary btn-sm m-b-0-0 waves-effect waves-light"><i class="oi oi-eye"></i></button></a></span></td>
+                    <td>
+                      <?php 
+                        if ($u->status === "y") {
+                        ?>
+                        
+                          <span data-toggle="tooltip" data-placement="top" title="Status"><a id='cek' data-id="<?= $u->id ?>" data-toggle="modal" data-target="#notif"><button type="button" class="btn btn-warning btn-sm m-b-0-0 waves-effect waves-light">Tutup Loker</button></a></span> 
+                        <?php
+                        }else {
+                         ?>
+                         <span data-toggle="tooltip" data-placement="top" title="Status"><button type="button" class="btn btn-success btn-sm m-b-0-0 waves-effect waves-light">Loker Ditutup</button></span> 
+                        <?php 
+                        }
+                      ?>
+
+                      <span data-toggle="tooltip" data-placement="top" title="Lihat"><a href="<?php echo site_url('admin/job_post/read_application/'.$u->id);?>"><button type="button" class="btn btn-outline-secondary btn-sm m-b-0-0 waves-effect waves-light"><i class="oi oi-eye"></i></button></a></span>
+                    </td>
                     <td><?= $u->kode_job ?></td>
                     <td><?= $u->nama_job ?></td>
                     <td><?= $u->tgl ?></td>
