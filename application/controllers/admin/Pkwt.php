@@ -2215,7 +2215,7 @@ class Pkwt extends MY_Controller {
         header("Content-disposition: inline; filename=$nama_emp.doc");
         header("Content-length: ".strlen($document));
         // echo $document;
-        if ($document) {
+        // if ($document) {
 			$lamar = $this->db2->query("SELECT * FROM biodata_lo WHERE uid='$uid'")->result();
 			foreach ($lamar as $k) {
 				$data = array(
@@ -2235,13 +2235,74 @@ class Pkwt extends MY_Controller {
 					'created_at' => date('Y-m-d h:i:s'),
 					'uid' => $uid
 					);
-					$this->db->insert('xin_employees', $data);
+					$no_ktp = $k->no_ktp;
+					$no_kk = $k->no_kk;
+				
+					$insert = $this->db->insert('xin_employees', $data);
+					if ($insert) {
+
+
+						$emp = $this->db->query("SELECT * FROM xin_employees WHERE uid='$uid'")->result();
+						foreach($emp as $l){
+							// echo $l->user_id;
+							$data1 = array(
+								'nomer_tugas' => $no_s,
+								'tgl_tugas' => $tgl_tugas,
+								'user_id' => $l->user_id,
+								'uid' => $uid,
+							);
+							$this->db->insert('xin_surat_tugas', $data1);
+
+							$data2 = array(
+								'user_id' => $l->user_id,
+								'module_attributes_id' => '1',
+								'attribute_value' => $no_ktp
+							);
+							$this->db->insert('xin_hrsale_module_attributes_values', $data2);
+							$data3 = array(
+								'user_id' => $l->user_id,
+								'module_attributes_id' => '2',
+								'attribute_value' => $no_kk
+							);
+							$this->db->insert('xin_hrsale_module_attributes_values', $data3);
+						}
+					}
+
+					$config = [
+						'mailtype' => 'text',
+						'charset' => 'iso-8859-1',
+						'protocol' => 'smtp',
+						'smtp_host' => 'smtp.gmail.com',
+						'smtp_user' => 'noreply@mitrajasa.com',
+						'smtp_pass' => 'JaWaRa321',
+						'smtp_port' => 587
+					];
+					//config
+					$this->load->library('email', $config);
+					$this->email->initialize($config);
+					//send
+					$this->email->from('');
+					$this->email->to('adewaloyo01.9f@gmail.com');
+					$this->email->subject('Karyawan Baru UNIT '.$name_company);
+					$this->email->message('Nama : '.$k->nama_depan.' '.$k->nama_belakang.'
+					'.'Tanggal Lahir : '.$k->tgl_l.'
+					'.'NIK : '.$no_ktp.'
+					'.'NO KK : '.$no_kk.'
+					');
+					if ($this->email->send()) {
+						$Return['result'] = $this->lang->line('xin_success_employee_exit_added');
+					}
+
 			}
+			
+			redirect('admin/pkwt');
             echo $document;
-            redirect('admin/pkwt');
-        }
+			$document = "";
+            
+        // }
        
      }
+
 	  public function is_designation() {
 
 		$data['title'] = $this->Xin_model->site_title();
