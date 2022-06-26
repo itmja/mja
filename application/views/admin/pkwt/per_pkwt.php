@@ -63,7 +63,16 @@
                 </tr>
             </thead>
             <?php
-
+            $unit = $this->db->query("SELECT * FROM xin_employees WHERE user_id='$session[user_id]'")->result();
+            foreach ($unit as $p) {
+              if ($id === null) {
+                if ($p->company_id === "1") {
+                  $id = "";
+                }else{
+                  $id = $p->company_id;
+                }
+               
+              }
             $cquery3 = $this->db->query("SELECT *,xin_employees.company_id,xin_employees.first_name,xin_employees.last_name,xin_employees.gender,xin_employees.address,xin_employees.contact_no,xin_employees.date_of_birth,xin_companies.name,xin_designations.designation_name FROM xin_employee_contract INNER JOIN xin_employees ON xin_employees.user_id = xin_employee_contract.employee_id INNER JOIN xin_companies ON xin_companies.company_id = xin_employees.company_id INNER JOIN xin_designations ON xin_designations.designation_id = xin_employee_contract.designation_id WHERE xin_employees.company_id LIKE '%$id' ORDER BY to_date")->result(); 
 
             ?>
@@ -116,6 +125,7 @@
                 <?php
                      }
                     }
+                  }
                 ?>
             </tbody>
           </table>
