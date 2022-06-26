@@ -54,7 +54,7 @@
                             echo "N";
                         }elseif($u->status === "y"){
                         echo "Di Terima";
-                      }else{
+                        }else{
                           echo $u->status;
                         }
                       ?>
@@ -62,7 +62,22 @@
                     <td>
                      <!-- <a id="panggil" title="Panggil" class="btn btn-outline-secondary btn-sm m-b-0-0 waves-effect waves-light" data-toggle="modal" data-target="#exampleModal" data-uid="<?= $u->uid ?>" data-nama="<?= $u->nama_depan ?> <?= $u->nama_belakang ?>" data-no="<?= $u->no_hp ?>"><i class="oi oi-phone"></i></a> -->
                      <span data-toggle="tooltip" data-placement="top" title="Lihat"><a href="<?php echo site_url('admin/job_candidates/read_application/'.$u->uid);?>"><button type="button" class="btn btn-outline-secondary btn-sm m-b-0-0 waves-effect waves-light"><i class="oi oi-eye"></i></button></a></span>
-                     <span data-toggle="tooltip" data-placement="top" title="Terima"><a href="<?php echo site_url('admin/job_post/accept/'.$u->uid.'/'.$id);?>"><button type="button" class="btn btn-outline-secondary btn-sm m-b-0-0 waves-effect waves-light"><i class="oi oi-pencil"></i></button></a></span>
+                     <?php
+                        if ($u->status === "" || $u->status === "t") {
+                         ?>
+                         <span data-toggle="tooltip" data-placement="top" title="Terima"><a href="<?php echo site_url('admin/job_post/accept/'.$u->uid.'/'.$id);?>"><button type="button" class="btn btn-primary btn-sm m-b-0-0 waves-effect waves-light">Terima Kandidat</button></a></span>
+                         <?php
+                        }elseif($u->status === "y"){
+                          ?>
+                          <span data-toggle="tooltip" data-placement="top" title="Terima"><button type="button" class="btn btn-success btn-sm m-b-0-0 waves-effect waves-light">Kandidat Sudah Di Terima</button></span>
+                          <?php
+                        }else{
+                         ?>
+                         <span data-toggle="tooltip" data-placement="top" title="Terima"><a href="<?php echo site_url('admin/job_post/accept/'.$u->uid.'/'.$id);?>"><button type="button" class="btn btn-primary btn-sm m-b-0-0 waves-effect waves-light">Terima Kandidat</button></a></span>
+                         <?php
+                        }
+                      ?>
+                     
                     </td>
                 </tr>
             <?php
