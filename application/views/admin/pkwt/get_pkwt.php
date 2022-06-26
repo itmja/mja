@@ -69,9 +69,19 @@
                             <?php
                               $surat = $this->db->query("SELECT * FROM xin_surat_tugas WHERE uid='$u->uid'")->num_rows();
                               if ($surat > 0) {
-                             ?>
+                                $pkwt = $this->db->query("SELECT * FROM xin_employee_contract WHERE uid='$u->uid'")->num_rows();
+                                // echo $pkwt;
+                                if ($pkwt === 0) {
+                              ?>
                               <span data-toggle="tooltip" data-placement="top" title="Pkwt"> <a id="cek"  class="btn btn-warning btn-sm m-b-0-0 waves-effect waves-light" data-toggle="modal" data-target="#pkwt" data-uid="<?= $u->uid ?>" data-nama="<?= $u->nama_depan ?> <?= $u->nama_belakang ?>" data-no="<?= $u->no_hp ?>"><i class="oi oi-briefcase"></i></a></span>
-                              <span data-toggle="tooltip" data-placement="top" title="Surat Tugas"><button type="button" class="btn btn-success btn-sm m-b-0-0 waves-effect waves-light"><i class="oi oi-briefcase"></i></button></span>
+                              <?php
+                                }else{
+                              ?>
+                                <span data-toggle="tooltip" data-placement="top" title="Data Sudah Di PKWT"> <button type="button" class="btn btn-success btn-sm m-b-0-0 waves-effect waves-light"><i class="oi oi-briefcase"></i></button></span>
+                              <?php
+                                }
+                              ?>
+                              <span data-toggle="tooltip" data-placement="top" title="Data Sudah di Surat Tugas"><button type="button" class="btn btn-success btn-sm m-b-0-0 waves-effect waves-light"><i class="oi oi-briefcase"></i></button></span>
                              <?php  
                               }else{
                                 ?>
@@ -97,7 +107,7 @@
 <div class="modal fade" id="pkwt" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-    <?php echo form_open('admin/job_post/call_all');?>
+    <?php echo form_open('admin/pkwt/pkwt_add');?>
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">PKWT</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -121,7 +131,7 @@
               <h6 class="mb-0">Tanggal Mulai</h6>
             </div>
             <div class="col-sm-9 text-secondary">
-                <input class="form-control date" placeholder="" readonly name="tgl" type="text" value="">
+                <input class="form-control date" placeholder="" readonly name="tgl_m" type="text" value="">
             </div>
           </div>
           <hr>
@@ -130,7 +140,7 @@
               <h6 class="mb-0">Tanggal Berakir</h6>
             </div>
             <div class="col-sm-9 text-secondary">
-              <input class="form-control date" placeholder="" readonly name="tgl" type="text" value="">
+              <input class="form-control date" placeholder="" readonly name="tgl_b" type="text" value="">
             </div>
           </div>
       </div>
