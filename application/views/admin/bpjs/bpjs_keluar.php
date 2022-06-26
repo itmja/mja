@@ -63,12 +63,21 @@
                     <th>Nomer Hp</th>
                     <th>Tanggal Lahir</th>
                     <th>Status</th>
-                    <th>Aksi</th>
+                    <!-- <th>Aksi</th> -->
                 </tr>
             </thead>
             <tbody>
             <?php
-            
+                $unit = $this->db->query("SELECT * FROM xin_employees WHERE user_id='$session[user_id]'")->result();
+                foreach ($unit as $p) {
+                  if ($cid === null) {
+                    if ($p->company_id === "1") {
+                      $cid = "";
+                    }else{
+                      $cid = $p->company_id;
+                    }
+                   
+                  }
                 $no =1;
                     $cquery3 = $this->db->query("SELECT *,xin_companies.name,xin_designations.designation_name FROM xin_employees INNER JOIN xin_companies ON xin_companies.company_id =  xin_employees.company_id INNER JOIN xin_designations ON xin_designations.designation_id = xin_employees.designation_id WHERE bpjs = '2' AND xin_employees.company_id LIKE '%$cid'")->result(); 
                     foreach ($cquery3 as $u) {
@@ -90,13 +99,13 @@
                             <td><?= $u->contact_no ?></td>
                             <td><?= $u->date_of_birth ?></td>
                             <td>Karyawan Keluar</td>
-                            <td><span data-toggle="tooltip" data-placement="top" title="Daftarkan"> <a id="panggil"  class="btn btn-outline-secondary btn-sm m-b-0-0 waves-effect waves-light" data-toggle="modal" data-target="#pkwt" data-uid="<?= $u->user_id ?>"><i class="oi oi-briefcase"></i></a></span></td>
+                            <!-- <td><span data-toggle="tooltip" data-placement="top" title="Daftarkan"> <a id="panggil"  class="btn btn-outline-secondary btn-sm m-b-0-0 waves-effect waves-light" data-toggle="modal" data-target="#pkwt" data-uid="<?= $u->user_id ?>"><i class="oi oi-briefcase"></i></a></span></td> -->
                             
                         </tr>
                 <?php 
                     }
               
-            
+                  }
             ?>
            
             </tbody>
