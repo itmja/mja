@@ -2138,6 +2138,16 @@ class Pkwt extends MY_Controller {
 		$start = intval($this->input->get("start"));
 		$length = intval($this->input->get("length"));
 	 }
+	 public function pkwt_add(){
+		$uid = $this->input->post('uid');
+		$tgl_m = $this->input->post('tgl_m');
+		$tgl_b = $this->input->post('tgl_b');
+
+		$emp = $this->db->query("SELECT * FROM xin_employees WHERE uid='$uid'")->result();
+		foreach ($emp as $a) {
+			echo $a->first_name;
+		}
+	 }
 	 public function surat_tugas(){
         $uid = $this->input->post('uid');
         $tgl_tugas = $this->input->post('tgl');
