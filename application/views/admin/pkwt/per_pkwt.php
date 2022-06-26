@@ -110,7 +110,7 @@
                       <?php
                         if ($hari < 0){
                       ?>
-                        <span data-toggle="tooltip" data-placement="top" title="Perpanjang PKWT"> <a id="cek"  class="btn btn-outline-secondary btn-sm m-b-0-0 waves-effect waves-light" data-toggle="modal" data-target="#pkwt" data-uid="<?= $u->employee_id ?>" ><i class="oi oi-briefcase"></i></a></span>
+                        <span data-toggle="tooltip" data-placement="top" title="Perpanjang PKWT"> <a id="cek"  class="btn btn-outline-secondary btn-sm m-b-0-0 waves-effect waves-light" data-toggle="modal" data-target="#pkwt" data-uid="<?= $u->user_id ?>" data-nama="<?= $u->first_name ?> <?= $u->last_name ?>"><i class="oi oi-briefcase"></i></a></span>
                       <?php
                         }else{
                       ?>
@@ -135,11 +135,71 @@
     </div>
   </div>
 </div>
+<div class="modal fade" id="pkwt" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <?php echo form_open('admin/pkwt/pkwt_per');?>
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">PKWT</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <input type="hidden" name="uid" id="uid_pkwt">
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Nama Lengkap</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+                <!-- <span class="form-control" id="nama"></span> -->
+                <input class="form-control" placeholder="" name="nama" readonly type="text" value="" id="nama">
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Tanggal Mulai</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+                <input class="form-control date" placeholder="" readonly name="tgl_m" type="text" value="">
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Tanggal Berakir</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input class="form-control date" placeholder="" readonly name="tgl_b" type="text" value="">
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Judul Kontrak</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input class="form-control date" placeholder="" name="judul" type="text" value="">
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- <input type="submit" value="Simpan"> -->
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+      <?php echo form_close(); ?>
+    </div>
+  </div>
+</div>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#example').DataTable();
         $(document).on('click', '#cek', function() {
             let uid = $(this).data('uid');
+            let nama = $(this).data('nama');
+            $('#nama').val(nama);
             $('#uid_pkwt').val(uid);
         });
         $(document).on('click', '#panggil', function() {
