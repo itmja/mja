@@ -2168,13 +2168,24 @@ class Pkwt extends MY_Controller {
 			$document = str_replace("#TGL", $tgl_m, $document);
 			$document = str_replace("#MULAI", $tgl_m, $document);
 			$document = str_replace("#AKHIR", $tgl_b, $document);
+			$document = str_replace("#HT", 'AAA', $document);
 			// header untuk membuka file output RTF dengan MS. Word
 			header("Content-type: application/msword");
 			header("Content-disposition: inline; filename=$nama.doc");
 			header("Content-length: ".strlen($document));
-			
+			$data = array(
+				'employee_id' => $a->user_id,
+				'contract_type_id' => '2',
+				'from_date' => $tgl_m,
+				'designation_id' => $a->designation_id,
+				'title' => 'Kontrak Pertama',
+				'to_date' => $tgl_b,
+				'uid' => $uid
+			);
+			$this->db->insert('xin_employee_contract', $data);
+			echo $document;
 		}
-		echo $document;
+		
 	 }
 	 public function surat_tugas(){
         $uid = $this->input->post('uid');
