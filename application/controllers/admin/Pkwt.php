@@ -2138,6 +2138,14 @@ class Pkwt extends MY_Controller {
 		$start = intval($this->input->get("start"));
 		$length = intval($this->input->get("length"));
 	 }
+	 public function pkwt_per(){
+		$uid = $this->input->post('uid');
+		$tgl_m = $this->input->post('tgl_m');
+		$tgl_b = $this->input->post('tgl_b');
+		$judul = $this->input->post('judul');
+		echo $uid;
+	 }
+
 	 public function pkwt_add(){
 		$uid = $this->input->post('uid');
 		$tgl_m = $this->input->post('tgl_m');
@@ -2158,7 +2166,7 @@ class Pkwt extends MY_Controller {
 			// isi dokumen dinyatakan dalam bentuk string
 			$document = str_replace("#NAMA", $nama, $document);
 			$document = str_replace("#JK", $a->gender, $document);
-			$document = str_replace("#TEMPAT", $tempat, $document);
+			$document = str_replace("#TEMPAT", $a->tempat_l, $document);
 			$document = str_replace("#TANGGALLAHIR", $a->date_of_birth, $document);
 			$document = str_replace("#NIK", $nik, $document);
 			$document = str_replace("#JABATAN", $a->designation_name, $document);
@@ -2273,6 +2281,7 @@ class Pkwt extends MY_Controller {
 					'last_name' => $k->nama_belakang,
 					'company_id' => $company_id,
 					'location_id' => $location_id,
+					'tempat_l' => $k->tempat_l,
 					'date_of_birth' => $k->tgl_l,
 					'gender' => $k->jk,
 					'department_id' => $department_id,
