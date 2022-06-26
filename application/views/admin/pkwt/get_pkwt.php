@@ -66,16 +66,16 @@
                         ?>
                         </td>
                         <td> 
-                            <span data-toggle="tooltip" data-placement="top" title="Pkwt"> <a id="cek"  class="btn btn-outline-secondary btn-sm m-b-0-0 waves-effect waves-light" data-toggle="modal" data-target="#pkwt" data-uid="<?= $u->uid ?>" data-nama="<?= $u->nama_depan ?> <?= $u->nama_belakang ?>" data-no="<?= $u->no_hp ?>"><i class="oi oi-briefcase"></i></a></span>
                             <?php
                               $surat = $this->db->query("SELECT * FROM xin_surat_tugas WHERE uid='$u->uid'")->num_rows();
                               if ($surat > 0) {
                              ?>
+                              <span data-toggle="tooltip" data-placement="top" title="Pkwt"> <a id="cek"  class="btn btn-warning btn-sm m-b-0-0 waves-effect waves-light" data-toggle="modal" data-target="#pkwt" data-uid="<?= $u->uid ?>" data-nama="<?= $u->nama_depan ?> <?= $u->nama_belakang ?>" data-no="<?= $u->no_hp ?>"><i class="oi oi-briefcase"></i></a></span>
                               <span data-toggle="tooltip" data-placement="top" title="Surat Tugas"><button type="button" class="btn btn-success btn-sm m-b-0-0 waves-effect waves-light"><i class="oi oi-briefcase"></i></button></span>
                              <?php  
                               }else{
                                 ?>
-                                <span data-toggle="tooltip" data-placement="top" title="Surat Tugas"> <a id="panggil"  class="btn btn-outline-secondary btn-sm m-b-0-0 waves-effect waves-light" data-toggle="modal" data-target="#tugas" data-uid="<?= $u->uid ?>" data-nama="<?= $u->nama_depan ?> <?= $u->nama_belakang ?>" data-no="<?= $u->no_hp ?>"><i class="oi oi-briefcase"></i></a></span>
+                                <span data-toggle="tooltip" data-placement="top" title="Surat Tugas"> <a id="panggil"  class="btn btn-primary btn-sm m-b-0-0 waves-effect waves-light" data-toggle="modal" data-target="#tugas" data-uid="<?= $u->uid ?>" data-nama="<?= $u->nama_depan ?> <?= $u->nama_belakang ?>" data-no="<?= $u->no_hp ?>"><i class="oi oi-briefcase"></i></a></span>
                               <?php
                               }
                               
@@ -108,7 +108,17 @@
           <input type="hidden" name="uid" id="uid_pkwt">
           <div class="row">
             <div class="col-sm-3">
-              <h6 class="mb-0">Tanggal Pelaksanaan</h6>
+              <h6 class="mb-0">Nama Lengkap</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+                <span class="form-control" id="nama"></span>
+                <!-- <input class="form-control" placeholder="" name="nama" type="text" value="" id="nama"> -->
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Tanggal Mulai</h6>
             </div>
             <div class="col-sm-9 text-secondary">
                 <input class="form-control date" placeholder="" readonly name="tgl" type="text" value="">
@@ -117,10 +127,10 @@
           <hr>
           <div class="row">
             <div class="col-sm-3">
-              <h6 class="mb-0">Pesan</h6>
+              <h6 class="mb-0">Tanggal Berakir</h6>
             </div>
             <div class="col-sm-9 text-secondary">
-              <input type="text" class="form-control" name="pesan">
+              <input class="form-control date" placeholder="" readonly name="tgl" type="text" value="">
             </div>
           </div>
       </div>
@@ -226,6 +236,8 @@
         $('#example').DataTable();
         $(document).on('click', '#cek', function() {
             let uid = $(this).data('uid');
+            let nama = $(this).data('nama');
+            $('#nama').text(nama);
             $('#uid_pkwt').val(uid);
         });
         $(document).on('click', '#panggil', function() {
