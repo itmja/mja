@@ -617,6 +617,7 @@ class Job_post extends MY_Controller {
 		}
 		
 	}
+	
 	// Validate and update info in database
 	public function update() {
 	
