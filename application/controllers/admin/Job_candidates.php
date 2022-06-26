@@ -215,6 +215,16 @@ class Job_candidates extends MY_Controller {
 			
 		//  }
 	 }
+	 public function accept($uid) {
+		// echo $id;
+		$update = $this->db2->query("UPDATE biodata_lo SET status='y' WHERE uid='$uid'");
+		if ($update) {
+			redirect('admin/job_candidates/');
+		}else{
+			echo "error";
+		}
+		
+	}
 	 public function read_application($id) {
 		 $data['id'] = $id;
 		$session = $this->session->userdata('username');
