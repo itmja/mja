@@ -67,7 +67,19 @@
                         </td>
                         <td> 
                             <span data-toggle="tooltip" data-placement="top" title="Pkwt"> <a id="cek"  class="btn btn-outline-secondary btn-sm m-b-0-0 waves-effect waves-light" data-toggle="modal" data-target="#pkwt" data-uid="<?= $u->uid ?>" data-nama="<?= $u->nama_depan ?> <?= $u->nama_belakang ?>" data-no="<?= $u->no_hp ?>"><i class="oi oi-briefcase"></i></a></span>
-                            <span data-toggle="tooltip" data-placement="top" title="Surat Tugas"> <a id="panggil"  class="btn btn-outline-secondary btn-sm m-b-0-0 waves-effect waves-light" data-toggle="modal" data-target="#tugas" data-uid="<?= $u->uid ?>" data-nama="<?= $u->nama_depan ?> <?= $u->nama_belakang ?>" data-no="<?= $u->no_hp ?>"><i class="oi oi-briefcase"></i></a></span>
+                            <?php
+                              $surat = $this->db->query("SELECT * FROM xin_surat_tugas WHERE uid='$u->uid'")->num_rows();
+                              if ($surat > 0) {
+                             ?>
+                              <span data-toggle="tooltip" data-placement="top" title="Surat Tugas"><button type="button" class="btn btn-success btn-sm m-b-0-0 waves-effect waves-light"><i class="oi oi-briefcase"></i></button></span>
+                             <?php  
+                              }else{
+                                ?>
+                                <span data-toggle="tooltip" data-placement="top" title="Surat Tugas"> <a id="panggil"  class="btn btn-outline-secondary btn-sm m-b-0-0 waves-effect waves-light" data-toggle="modal" data-target="#tugas" data-uid="<?= $u->uid ?>" data-nama="<?= $u->nama_depan ?> <?= $u->nama_belakang ?>" data-no="<?= $u->no_hp ?>"><i class="oi oi-briefcase"></i></a></span>
+                              <?php
+                              }
+                              
+                            ?>
                             <span data-toggle="tooltip" data-placement="top" title="Lihat"><a href="<?php echo site_url('admin/job_candidates/read_application/'.$u->uid);?>"><button type="button" class="btn btn-outline-secondary btn-sm m-b-0-0 waves-effect waves-light"><i class="oi oi-eye"></i></button></a></span>
                         </td>
                     </tr>
