@@ -93,7 +93,7 @@
                       $lambat        =new DateTime($date);
                       $diff    =$lambat->diff($kembali);
                       // echo $diff->d;
-                     if ($hari <= 30 || $diff->d !== "0") {
+                     if ($hari <= 30 ) {
           
                 ?>
                   <tr>
