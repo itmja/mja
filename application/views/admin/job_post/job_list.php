@@ -96,6 +96,30 @@ $all_job_categories = $this->Recruitment_model->all_job_categories();
                     </div>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="gender">Penempatan</label>
+                      <input type="text" class="form-control" name="penempatan">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="experience" class="control-label">Jam Kerja</label>
+                      <select class="form-control" name="jam" data-plugin="select_hrm" data-placeholder="">
+                        <option value="Full Time">Full Time</option>
+                        <option value="Part Time">Part Time</option>
+                        <option value="Shiff">Shiff</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="experience" class="control-label">Usia Max</label>
+                      <input type="text" class="form-control" name="usia">
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
