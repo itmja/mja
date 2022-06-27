@@ -565,7 +565,7 @@ class Job_post extends MY_Controller {
 		// if($Return['error']!=''){
        	// 	$this->output($Return);
     	// }
-		$d = date("Y/m/d");
+		$d = date("Y-m-d");
     	$kd = "JOB.$d";
 		echo $kd;
 		// $jurl = random_string('alnum', 40);
@@ -577,6 +577,9 @@ class Job_post extends MY_Controller {
 		'jk' => $this->input->post('gender'),
 		'peng' => $this->input->post('experience'),	
 		'status' => "y",
+		'penempatan' => $this->input->post('penempatan'),
+		'jam_kerja' => $this->input->post('jam'),
+		'umur' => $this->input->post('usia'),
 		);
 		$result = $this->Job_post_model->add($data);
 		// if ($result == TRUE) {
