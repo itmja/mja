@@ -155,12 +155,17 @@ class Reports extends MY_Controller
 		if(empty($session)){ 
 			redirect('admin/');
 		}
+		$company_id = $this->input->post('company_id');
+		$department_id = $this->input->post('department_id');
+		$designation_id = $this->input->post('designation_id');
+		$active = $this->input->post('active');
 		$data['title'] = $this->lang->line('xin_hr_report_employees').' | '.$this->Xin_model->site_title();
 		$data['breadcrumbs'] = $this->lang->line('xin_hr_report_employees');
 		$data['path_url'] = 'reports_employees';
 		$data['all_companies'] = $this->Xin_model->get_companies();
 		$data['all_departments'] = $this->Department_model->all_departments();
 		$data['all_designations'] = $this->Designation_model->all_designations();
+		$data['tampil'] = $this->Reports_model->get_employees_reports($company_id,$department_id,$designation_id,$active)->result();
 		$role_resources_ids = $this->Xin_model->user_role_resource();
 		if(in_array('117',$role_resources_ids)) {
 			$data['subview'] = $this->load->view("admin/reports/employees", $data, TRUE);
@@ -202,7 +207,7 @@ class Reports extends MY_Controller
 			);
 		$session = $this->session->userdata('username');
 		if(!empty($session)){ 
-			$this->load->view("admin/reports/report_get_designations", $data);
+			$this->load->view("admin/reports/get_designations", $data);
 		} else {
 			redirect('admin/');
 		}
@@ -376,7 +381,7 @@ class Reports extends MY_Controller
 	 
 	 public function report_employees_list()
      {
-
+		// $data['ls'] = $this->uri->segment(4);
 		$data['title'] = $this->Xin_model->site_title();
 		$session = $this->session->userdata('username');
 		if(!empty($session)){ 
