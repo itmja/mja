@@ -161,26 +161,26 @@ class Reports_model extends CI_Model {
 	}
 	
 	// get employees list> reports
-	public function get_employees_reports($company_id,$department_id,$designation_id) {
+	public function get_employees_reports($company_id,$department_id,$designation_id,$active) {
 		  if($company_id==0 && $department_id==0 && $designation_id==0) {
-		 	 return $query = $this->db->query("SELECT * FROM xin_employees");
+		 	 return $query = $this->db->query("SELECT *,xin_companies.name,xin_designations.designation_name,xin_departments.department_name,xin_employees.is_active as active,xin_employees.email as email1 FROM xin_employees INNER JOIN xin_companies ON xin_companies.company_id =  xin_employees.company_id INNER JOIN xin_designations ON xin_designations.designation_id = xin_employees.designation_id INNER JOIN xin_departments ON xin_departments.department_id = xin_employees.department_id WHERE xin_employees.is_active LIKE '%$active'");
 		  } else if($company_id!=0 && $department_id==0 && $designation_id==0) {
-		 	  $sql = 'SELECT * from xin_employees where company_id = ?';
+		 	  $sql = "SELECT *,xin_companies.name,xin_designations.designation_name,xin_departments.department_name,xin_employees.is_active as active,xin_employees.email as email1 FROM xin_employees INNER JOIN xin_companies ON xin_companies.company_id =  xin_employees.company_id INNER JOIN xin_designations ON xin_designations.designation_id = xin_employees.designation_id INNER JOIN xin_departments ON xin_departments.department_id = xin_employees.department_id where xin_employees.company_id = ? and xin_employees.is_active LIKE '%$active'";
 			  $binds = array($company_id);
 			  $query = $this->db->query($sql, $binds);
 			  return $query;
 		  } else if($company_id!=0 && $department_id!=0 && $designation_id==0) {
-		 	  $sql = 'SELECT * from xin_employees where company_id = ? and department_id = ?';
+		 	  $sql = "SELECT *,xin_companies.name,xin_designations.designation_name,xin_departments.department_name,xin_employees.is_active as active,xin_employees.email as email1 FROM xin_employees INNER JOIN xin_companies ON xin_companies.company_id =  xin_employees.company_id INNER JOIN xin_designations ON xin_designations.designation_id = xin_employees.designation_id INNER JOIN xin_departments ON xin_departments.department_id = xin_employees.department_id where xin_employees.company_id = ? and xin_employees.department_id = ? and xin_employees.is_active LIKE '%$active'";
 			  $binds = array($company_id,$department_id);
 			  $query = $this->db->query($sql, $binds);
 			  return $query;
 		  } else if($company_id!=0 && $department_id!=0 && $designation_id!=0) {
-		 	  $sql = 'SELECT * from xin_employees where company_id = ? and department_id = ? and designation_id = ?';
+		 	  $sql = "SELECT *,xin_companies.name,xin_designations.designation_name,xin_departments.department_name,xin_employees.is_active as active,xin_employees.email as email1 FROM xin_employees INNER JOIN xin_companies ON xin_companies.company_id =  xin_employees.company_id INNER JOIN xin_designations ON xin_designations.designation_id = xin_employees.designation_id INNER JOIN xin_departments ON xin_departments.department_id = xin_employees.department_id where xin_employees.company_id = ? and xin_employees.department_id = ? and xin_employees.designation_id = ? and xin_employees.is_active LIKE '%$active'";
 			  $binds = array($company_id,$department_id,$designation_id);
 			  $query = $this->db->query($sql, $binds);
 			  return $query;
 		  } else {
-			  return $query = $this->db->query("SELECT * FROM xin_employees");
+			  return $query = $this->db->query("SELECT *,xin_companies.name,xin_designations.designation_name,xin_departments.department_name,xin_employees.is_active as active,xin_employees.email as email1 FROM xin_employees INNER JOIN xin_companies ON xin_companies.company_id =  xin_employees.company_id INNER JOIN xin_designations ON xin_designations.designation_id = xin_employees.designation_id INNER JOIN xin_departments ON xin_departments.department_id = xin_employees.department_id");
 		  }
 	}
 	
