@@ -93,7 +93,7 @@ endif;
         
         <!-- Text -->
         <div class="w-100 text-white px-5">
-        <h1 class="display-2 font-weight-bolder mb-4"><?php echo $this->lang->line('xin_admin_login');?><?php echo $company[0]->company_name;?></h1>
+        <h1 class="display-2 font-weight-bolder mb-4"><?php echo $this->lang->line('xin_admin_login');?> <?php echo $company[0]->company_name;?></h1>
         <div class="text-large font-weight-light"> <?php echo $theme_info[0]->login_page_text;?> </div>
       </div>
         <!-- /.Text --> 
