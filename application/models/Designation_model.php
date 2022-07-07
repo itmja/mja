@@ -64,7 +64,7 @@ class designation_model extends CI_Model {
 	// get department > designations
 	public function ajax_designation_information($id) {
 	
-		$sql = 'SELECT * FROM xin_designations WHERE sub_department_id = ?';
+		$sql = 'SELECT * FROM xin_designations WHERE department_id = ?';
 		$binds = array($id);
 		$query = $this->db->query($sql, $binds);
 		
