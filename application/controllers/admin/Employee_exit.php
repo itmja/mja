@@ -218,7 +218,7 @@ class Employee_exit extends MY_Controller {
 	
 	// Validate and add info in database
 	public function add_exit() {
-	
+		
 		if($this->input->post('add_type')=='exit') {		
 		/* Define return | here result is used to return user data and error for error message */
 		$Return = array('result'=>'', 'error'=>'', 'csrf_hash'=>'');
@@ -241,7 +241,20 @@ class Employee_exit extends MY_Controller {
 		if($Return['error']!=''){
        		$this->output($Return);
     	}
+		$company_id = $this->input->post('company_id');
+		$name_company = "";
+		$company = $this->db->query("SELECT * FROM xin_companies WHERE company_id='$company_id'")->result();
+        foreach ($company as $a ) {
+            $name_company = $a->name;
+            $address_company = $a->address_1;
+        }
+
 		$id_emp = $this->input->post('employee_id');
+		$nik = "";
+		$pr = $this->db->query("SELECT * FROM xin_hrsale_module_attributes_values WHERE module_attributes_id='1' AND user_id='$id_emp'")->result();
+        foreach ($pr as $n ) {
+            $nik = $n->attribute_value;
+        }
 		$data = array(
 		'employee_id' => $this->input->post('employee_id'),
 		'company_id' => $this->input->post('company_id'),
@@ -253,55 +266,46 @@ class Employee_exit extends MY_Controller {
 		'added_by' => $this->input->post('user_id'),
 		'created_at' => date('d-m-Y'),
 		);
-		$result = $this->Employee_exit_model->add($data);
-		if ($result == TRUE) {
-			if($this->input->post('is_inactivate_account') == 1){
+		// $result = $this->Employee_exit_model->add($data);
+		// if ($result == TRUE) {
+		// 	if($this->input->post('is_inactivate_account') == 1){
 				
-				$this->db->query("UPDATE xin_employees SET bpjs ='2' WHERE user_id='$id_emp'");
+		// 		$this->db->query("UPDATE xin_employees SET bpjs ='2' WHERE user_id='$id_emp'");
 				 
 
 
-				$icdata = array(
-					'is_active' => 0,
-				);
-				$this->Employees_model->basic_info($icdata,$this->input->post('employee_id'));
-			} else {
-				$icdata = array(
-				'is_active' => 1,
-			);
-				$this->Employees_model->basic_info($icdata,$this->input->post('employee_id'));
-			}
+		// 		$icdata = array(
+		// 			'is_active' => 0,
+		// 		);
+		// 		$this->Employees_model->basic_info($icdata,$this->input->post('employee_id'));
+		// 	} else {
+		// 		$icdata = array(
+		// 		'is_active' => 1,
+		// 	);
+		// 		$this->Employees_model->basic_info($icdata,$this->input->post('employee_id'));
+		// 	}
 
-			$send = $this->db->query("SELECT * FROM xin_employees")->result();
+			$send = $this->db->query("SELECT * FROM xin_employees WHERE user_id='$id_emp'")->result();
 			foreach ($send as $p) {
-				$config = [
-					'mailtype' => 'text',
-					'charset' => 'iso-8859-1',
-					'protocol' => 'smtp',
-					'smtp_host' => 'smtp.gmail.com',
-					'smtp_user' => 'noreply@mitrajasa.com',
-					'smtp_pass' => 'JaWaRa321',
-					'smtp_port' => 587
-				];
-				//config
-				$this->load->library('email', $config);
-				$this->email->initialize($config);
-				//send
-				$this->email->from('');
-				$this->email->to('khoiri81@gmail.com');
-				$this->email->subject('Karyawan Keluar');
-				$this->email->message('Nama : '.$p->first_name.' '.$p->last_name.'
-				'.'Tanggal Lahir : '.$p->date_of_birth.'
-				');
-				if ($this->email->send()) {
-					$Return['result'] = $this->lang->line('xin_success_employee_exit_added');
-				}
+				$url = "https://script.google.com/macros/s/AKfycbwr-JQvfjEn0KmuAII-viPDzsH-kpMozf_kMQZqlB4tYrIx90cKC6sfYcIA816LWFrr1w/exec";
+				$ch = curl_init($url);
+				curl_setopt_array($ch, [
+				CURLOPT_RETURNTRANSFER => true,
+				CURLOPT_FOLLOWLOCATION => true,
+				CURLOPT_POSTFIELDS => http_build_query([
+					"recipient" => "byn0lnot@gmail.com",
+					"subject"   => "KARYAWAN KELUAR"." ".$name_company,
+					"body"      => "Nama Lengkap ".": ".$p->first_name." ".$p->last_name." "."-"." "."NIK : ".$nik." "."-"." "."TANGGAL LAHIR ".": ".$p->date_of_birth."",
+				])
+				]);
+				$result = curl_exec($ch);
+				
 			}
 			
 			
-		} else {
-			$Return['error'] = $this->lang->line('xin_error_msg');
-		}
+		// } else {
+		// 	$Return['error'] = $this->lang->line('xin_error_msg');
+		// }
 		$this->output($Return);
 		exit;
 		}
