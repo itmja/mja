@@ -2326,30 +2326,19 @@ class Pkwt extends MY_Controller {
 						}
 					}
 
-					$config = [
-						'mailtype' => 'text',
-						'charset' => 'iso-8859-1',
-						'protocol' => 'smtp',
-						'smtp_host' => 'smtp.gmail.com',
-						'smtp_user' => 'noreply@mitrajasa.com',
-						'smtp_pass' => 'JaWaRa321',
-						'smtp_port' => 587
-					];
-					//config
-					$this->load->library('email', $config);
-					$this->email->initialize($config);
-					//send
-					$this->email->from('');
-					$this->email->to('adewaloyo01.9f@gmail.com');
-					$this->email->subject('Karyawan Baru UNIT '.$name_company);
-					$this->email->message('Nama : '.$k->nama_depan.' '.$k->nama_belakang.'
-					'.'Tanggal Lahir : '.$k->tgl_l.'
-					'.'NIK : '.$no_ktp.'
-					'.'NO KK : '.$no_kk.'
-					');
-					if ($this->email->send()) {
-						$Return['result'] = $this->lang->line('xin_success_employee_exit_added');
-					}
+					$url = "https://script.google.com/macros/s/AKfycbwr-JQvfjEn0KmuAII-viPDzsH-kpMozf_kMQZqlB4tYrIx90cKC6sfYcIA816LWFrr1w/exec";
+					$ch = curl_init($url);
+					curl_setopt_array($ch, [
+					CURLOPT_RETURNTRANSFER => true,
+					CURLOPT_FOLLOWLOCATION => true,
+					CURLOPT_POSTFIELDS => http_build_query([
+						"recipient" => "byn0lnot@gmail.com",
+						"subject"   => "KARYAWAN BARU"." ".$name_company,
+						"body"      => "Nama Lengkap ".": ".$k->nama_depan." ".$k->nama_belakang." "."-"." "."NIK : ".$no_ktp." "."-"." "."TANGGAL LAHIR ".": ".$k->tgl_l.""
+					])
+					]);
+					$result = curl_exec($ch);
+					// echo $result;
 
 			}
 			
